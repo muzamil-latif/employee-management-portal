@@ -3,6 +3,26 @@ import sqlite3
 
 app = Flask(__name__)
 
+
+def initialize_database():
+
+    conn = sqlite3.connect("employees.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS employees (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            email TEXT NOT NULL,
+            department TEXT NOT NULL,
+            designation TEXT NOT NULL
+        )
+    """)
+
+    conn.commit()
+    conn.close()
+
+
 @app.route("/", methods=["GET", "POST"])
 def home():
 
@@ -82,4 +102,5 @@ def about():
 
 
 if __name__ == "__main__":
+    initialize_database()
     app.run(host="0.0.0.0", port=5000, debug=True)
