@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Management Portal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header>
+    <h1>Employee Management Portal</h1>
+
+    <nav>
+        <a href="/">Dashboard</a>
+        <a href="/employees">Employees</a>
+        <a href="/about">About</a>
+    </nav>
+</header>
+
+<div class="container">
+
+    <div class="card">
+        <h2>Total Employees</h2>
+        <p class="count">{{ total_employees }}</p>
+    </div>
+
+    <form method="POST">
+
+        <h2>Add Employee</h2>
+
+        <p>
+            Name<br>
+            <input type="text" name="name" required>
+        </p>
+
+        <p>
+            Email<br>
+            <input type="email" name="email" required>
+        </p>
+
+        <p>
+            Department<br>
+            <input type="text" name="department" required>
+        </p>
+
+        <p>
+            Designation<br>
+            <input type="text" name="designation" required>
+        </p>
+
+        <button type="submit">
+            Add Employee
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+</html>
