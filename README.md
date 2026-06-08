@@ -183,7 +183,7 @@ Deployment process:
 ## Future Improvements
 
 * Edit Employee Functionality
-* Docker Compose
+* Docker Composee
 * Environment Variables
 * Azure Container Registry (ACR)
 * Automated CD Pipeline
