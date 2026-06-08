@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+
+  employee-app:
+
+    build: .
+
+    container_name: employee-app
+
+    ports:
+      - "8080:5000"
+
+    restart: unless-stopped
