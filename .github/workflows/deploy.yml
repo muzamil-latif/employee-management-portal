@@ -1,0 +1,36 @@
+name: Deploy to Azure VM
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Deploy Application
+        uses: appleboy/ssh-action@v1.0.3
+
+        with:
+          host: ${{ secrets.VM_HOST }}
+          username: ${{ secrets.VM_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+          script: |
+            cd /home/luffy121/employee-management-portal
+
+            git pull
+
+            docker stop employee-app || true
+            docker rm employee-app || true
+
+            docker build -t employee-portal:latest .
+
+            docker run -d \
+              -p 5000:5000 \
+              --name employee-app \
+              employee-portal:latest
