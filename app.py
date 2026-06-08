@@ -1,12 +1,17 @@
 from flask import Flask, render_template, request, redirect
 import sqlite3
+import os
 
 app = Flask(__name__)
+
+DATABASE_NAME = os.getenv("DATABASE_NAME", "employees.db")
+PORT = int(os.getenv("PORT", 5000))
+
 
 
 def initialize_database():
 
-    conn = sqlite3.connect("employees.db")
+    conn = sqlite3.connect("DATABASE_NAME")
     cursor = conn.cursor()
 
     cursor.execute("""
@@ -33,7 +38,7 @@ def home():
         department = request.form["department"]
         designation = request.form["designation"]
 
-        conn = sqlite3.connect("employees.db")
+        conn = sqlite3.connect("DATABASE_NAME")
         cursor = conn.cursor()
 
         cursor.execute(
@@ -47,7 +52,7 @@ def home():
         conn.commit()
         conn.close()
 
-    conn = sqlite3.connect("employees.db")
+    conn = sqlite3.connect("DATABASE_NAME")
     cursor = conn.cursor()
 
     cursor.execute("SELECT COUNT(*) FROM employees")
@@ -64,7 +69,7 @@ def home():
 @app.route("/employees")
 def employees():
 
-    conn = sqlite3.connect("employees.db")
+    conn = sqlite3.connect("DATABASE_NAME")
     cursor = conn.cursor()
 
     cursor.execute("SELECT * FROM employees")
@@ -81,7 +86,7 @@ def employees():
 @app.route("/delete/<int:id>")
 def delete_employee(id):
 
-    conn = sqlite3.connect("employees.db")
+    conn = sqlite3.connect("DATABASE_NAME")
     cursor = conn.cursor()
 
     cursor.execute(
@@ -103,4 +108,4 @@ def about():
 
 if __name__ == "__main__":
     initialize_database()
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=PORT, debug=True)
