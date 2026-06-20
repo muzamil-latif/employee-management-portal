@@ -3,23 +3,28 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
-            steps {
-                echo 'Source code already checked out by Jenkins'
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t employee-portal:latest .'
             }
         }
 
-        stage('Verify Image') {
+        stage('Deploy Container') {
             steps {
-                sh 'docker images | grep employee-portal'
+                sh '''
+                docker rm -f employee-app || true
+                docker run -d \
+                  --name employee-app \
+                  -p 5000:5000 \
+                  employee-portal:latest
+                '''
             }
         }
 
+        stage('Verify Deployment') {
+            steps {
+                sh 'docker ps'
+            }
+        }
     }
 }
