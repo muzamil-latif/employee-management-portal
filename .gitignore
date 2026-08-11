@@ -2,3 +2,12 @@ employees.db
 __pycache__/
 *.pyc
 .vscode/
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+
+# macOS
+.DS_Store
