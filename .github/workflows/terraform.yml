@@ -4,16 +4,10 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'terraform-2azure/**'
-      - '.github/workflows/terraform.yml'
 
   pull_request:
     branches:
       - main
-    paths:
-      - 'terraform-2azure/**'
-      - '.github/workflows/terraform.yml'
 
 jobs:
   terraform:
@@ -46,6 +40,17 @@ jobs:
 
       - name: Terraform Validate
         run: terraform validate
+
+      - name: Debug SSH Public Key
+        run: |
+          echo "Key Type:"
+          echo "$TF_VAR_ssh_public_key" | awk '{print $1}'
+
+          echo "Comment:"
+          echo "$TF_VAR_ssh_public_key" | awk '{print $3}'
+
+          echo "Character Count:"
+          echo "$TF_VAR_ssh_public_key" | wc -c
 
       - name: Terraform Plan
         run: terraform plan -no-color
