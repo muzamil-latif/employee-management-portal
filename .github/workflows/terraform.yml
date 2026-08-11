@@ -1,0 +1,38 @@
+name: Terraform CI
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'terraform-2azure/**'
+
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'terraform-2azure/**'
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: terraform-2azure
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Format Check
+        run: terraform fmt -check
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Validate
+        run: terraform validate
