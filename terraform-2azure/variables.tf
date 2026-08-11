@@ -7,3 +7,7 @@ variable "location" {
   description = "Azure region for the resources"
   type        = string
 }
+variable "ssh_public_key" {
+  description = "SSH public key for the VM"
+  type        = string
+}
